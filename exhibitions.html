@@ -56,6 +56,21 @@
         <h2>Coming soon</h2>
         <p>February 2027: <i>Young Artists Grant 2027</i>, the winners' exhibition.<br>
         April 2027: <i>The Hidden Church</i>, icons and silver given to the Palace since 1996.</p>
+        <h2>Concerts and events in Iyık Janyl</h2>
+        <ul id="whatson">
+        <li>9 January 2027, 18:00: Cathedral Choir of St. Janyl, in our concert hall. Tickets 150 som at the door.</li>
+        </ul>
+        <p class="small">From the Iyık Janyl listings. Concert hall tickets at the door one hour before.</p>
+<script>(function(){var ul=document.getElementById('whatson');if(!ul||!window.fetch)return;
+var M=['January','February','March','April','May','June','July','August','September','October','November','December'];
+var today=new Date(Date.now()+216e5).toISOString().slice(0,10);
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+fetch('https://iradone.com/data/whatson.json',{cache:'no-cache'}).then(function(r){return r.json();}).then(function(d){
+var ev=(d.events||[]).filter(function(e){return e.kind!=='exhibition'&&e.kind!=='match'&&(/Palace of Art/.test(e.venue)||e.city==='Iyık Janyl')&&(e.end||e.date)>=today;}).slice(0,6);
+if(!ev.length)return;
+ul.innerHTML=ev.map(function(e){var p=e.date.split('-'),here=/Palace of Art/.test(e.venue);
+return '<li>'+(+p[2])+' '+M[+p[1]-1]+' '+p[0]+(e.time?', '+e.time:'')+': <a href="'+esc(e.url)+'">'+esc(e.title.en)+'</a>'+(here?', in our concert hall':', '+esc(e.venue))+(e.price&&e.price!=='free'?'. Tickets '+esc(e.price):'')+'.</li>';}).join('');
+}).catch(function(){});})();</script>
         <h2>Past exhibitions and catalogues</h2>
         <table class="hours">
         <tr><td>2021</td><td><i>Collections and Conservation: Twenty-Five Years</i></td></tr>
