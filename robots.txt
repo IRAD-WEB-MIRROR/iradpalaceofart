@@ -3,4 +3,4 @@ Allow: /
 Disallow: /tools/
 Disallow: /img/src/
 
-Sitemap: https://iradpalaceof.art/sitemap.xml
+Sitemap: https://palace.korkom.org/sitemap.xml
