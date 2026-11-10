@@ -67,6 +67,33 @@
         <p>Payment in cash only. The card terminal is not working.</p>
         <h2>Rules</h2>
         <p>Large bags must be left in the cloakroom. Please dress modestly in the icon rooms. No food or drink in the galleries. Groups of pilgrims are welcome on weekday mornings.</p>
+        <h2>Group visits</h2>
+        <p>Schools, parishes and tour groups of 10 or more people pay 100 som per person (schoolchildren 30 som) and may come from 9:00 on weekdays, before the Palace opens. Send the request at least 3 days ahead; the excursion office calls back to confirm.</p>
+        <form id="gv" action="#" class="gv">
+        <table class="hours">
+        <tr><td>Group</td><td><select name="kind"><option>School class</option><option>Parish or pilgrims</option><option>Tour group</option><option>Students</option><option>Other</option></select></td></tr>
+        <tr><td>Name of school or organisation</td><td><input name="org" size="30" required></td></tr>
+        <tr><td>Number of people</td><td><input name="n" type="number" min="10" max="60" value="20" required> (up to 60; larger groups come in two parts)</td></tr>
+        <tr><td>Date</td><td><input name="d" type="date" required></td></tr>
+        <tr><td>Time</td><td><select name="t"><option>9:00</option><option>10:00</option><option>11:00</option><option>14:00</option><option>15:00</option></select></td></tr>
+        <tr><td>Guide</td><td><select name="g"><option value="0">No guide</option><option value="600">Guide in Iradi (600 som)</option><option value="1200">Guide in English (1,200 som)</option><option value="1200">Guide in Russian (1,200 som)</option></select></td></tr>
+        <tr><td>Telephone of the group leader</td><td><input name="tel" size="16" required></td></tr>
+        <tr><td></td><td><input type="submit" value="Send request"></td></tr>
+        </table></form>
+        <div id="gvr" style="display:none;border:1px solid #888;background:#f4f4f4;padding:8px 12px;margin:8px 0"></div>
+        <script>
+        (function(){var f=document.getElementById('gv'),r=document.getElementById('gvr');
+        f.addEventListener('submit',function(ev){ev.preventDefault();
+        var d=new Date(f.d.value+'T00:00:00'),now=new Date(),n=parseInt(f.n.value,10),days=Math.ceil((d-now)/86400000),w=d.getDay(),err='';
+        if(days<3)err='Please choose a date at least 3 days from today.';
+        else if(f.t.value=='9:00'&&(w==0||w==6))err='At weekends the Palace opens at 12:00; please choose 14:00 or 15:00.';
+        else if((w==0||w==6)&&(f.t.value=='10:00'||f.t.value=='11:00'))err='At weekends the Palace opens at 12:00; please choose 14:00 or 15:00.';
+        r.style.display='block';
+        if(err){r.innerHTML='<b>'+err+'</b>';return;}
+        var per=f.kind.value=='School class'?30:100,sum=n*per+parseInt(f.g.value,10);
+        var no='GV-'+String(d.getFullYear()).slice(2)+'-'+String(1000+Math.floor(Math.random()*9000));
+        r.innerHTML='<b>Request No. '+no+'</b><br>'+f.kind.value+', '+f.org.value.replace(/</g,'')+', '+n+' people, '+d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+' at '+f.t.value+'.<br>To pay at the cash desk: <b>'+sum.toLocaleString('en-US')+' som</b> (cash only).<br>The excursion office will call you to confirm. If nobody has called 2 days before the visit, please ring +996 32 22 4 18 07 and give the request number.';});})();
+        </script>
         <h2>Café and shop</h2>
         <p>The shop sells catalogues, the postcards of our <a href="postcards.html">Palace of Art series</a>, felt from the women's cooperatives of the valleys and icons from the cathedral workshop. The café on the ground floor is open from 11:00.</p>
         <h2>Nearby</h2>
